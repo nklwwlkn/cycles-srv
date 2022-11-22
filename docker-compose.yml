@@ -1,0 +1,13 @@
+version: '3.7'
+
+services:
+    cycles_db:
+        container_name: cycles_db
+        image: postgres:13
+        restart: always
+        environment:
+            POSTGRES_USER: test_user
+            POSTGRES_PASSWORD: test_pass
+            POSTGRES_DB: test_db
+        ports:
+            - 5432:5432
