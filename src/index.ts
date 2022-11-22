@@ -22,9 +22,17 @@ const bootstrap = async () => {
     throw new Error('JWT_KEY must be defined')
   }
 
-  app.listen(NODE_PORT, () => {
+  const server = app.listen(NODE_PORT, () => {
     console.log(`Server is listening on PORT: ${NODE_PORT}`)
   })
+
+  process.on('unhandledRejection', (err: Error) => {
+  console.log('UNHANDLED REJECTION! Shutting down...');
+  console.log(err.name, err.message);
+  server.close(() => {
+    process.exit(1);
+  });
+});
 }
 
 bootstrap()
