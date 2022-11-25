@@ -1,10 +1,8 @@
 import express, { Router } from 'express'
 
-import { requireAuth } from '@middlewares/requireAuth'
+import { requireAuth, currentUser, validateRequest } from '@middlewares/.'
 import { getMe, updateMe } from '@controllers/usersController'
-import { currentUser } from '@middlewares/currentUser'
 import { updateMeValidator } from '@validators/usersValidator'
-import { validateRequest } from '@middlewares/requestValidator'
 
 const usersRouter: Router = express.Router()
 

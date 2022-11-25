@@ -10,8 +10,8 @@ import {
   sendSms,
   verifySmsAndAuth,
 } from '@controllers/authController'
-import { validateRequest } from '@middlewares/requestValidator'
-import { currentUser } from '@middlewares/currentUser'
+
+import { validateRequest, currentUser } from '@middlewares/.'
 
 const authRouter: Router = express.Router()
 

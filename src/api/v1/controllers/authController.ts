@@ -1,51 +1,29 @@
 import { Request, Response } from 'express'
 import jwt from 'jsonwebtoken'
 
-import { identityToolkit } from '@config/googleIdentityToolkit'
-
 import * as User from '@services/usersService'
 import { ENV } from '@config/globals'
 
-import { FirebaseAuthError } from '@errors/FirebaseAuthError'
+import * as Sms from '@services/auth/firebase/smsService'
 
 export async function sendSms(req: Request, res: Response) {
   const { phoneNumber, recaptchaToken } = req.body
-  let response
 
-  try {
-    response = await identityToolkit.relyingparty.sendVerificationCode({
-      requestBody: {
-        phoneNumber,
-        recaptchaToken,
-      },
-    })
+  const sessionInfo = await Sms.sendVerificationSms({
+    phoneNumber,
+    recaptchaToken,
+  })
 
-    res.send({
-      sessionInfo: response.data.sessionInfo,
-      phoneNumber: phoneNumber,
-    })
-  } catch (err) {
-    console.log(err)
-    throw new FirebaseAuthError(
-      'Probably, you supplied incorrect phone number format.',
-    )
-  }
+  res.send({
+    sessionInfo: sessionInfo,
+    phoneNumber: phoneNumber,
+  })
 }
 
 export async function verifySmsAndAuth(req: Request, res: Response) {
   const { code, sessionInfo, phoneNumber } = req.body
 
-  try {
-    await identityToolkit.relyingparty.verifyPhoneNumber({
-      requestBody: {
-        code: code,
-        sessionInfo: sessionInfo,
-      },
-    })
-  } catch (err) {
-    console.log(err)
-    throw new FirebaseAuthError('Incorrect code.')
-  }
+  await Sms.verifySmsCode({ code, sessionInfo })
 
   let user = await User.findByPhoneNumber(phoneNumber)
 

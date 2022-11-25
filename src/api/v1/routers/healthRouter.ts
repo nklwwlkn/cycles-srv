@@ -1,6 +1,6 @@
 import express, { Router } from 'express'
 
-import { check } from '@api/v1/controllers/healthController'
+import { check } from '@controllers/healthController'
 
 const healthRouter: Router = express.Router()
 

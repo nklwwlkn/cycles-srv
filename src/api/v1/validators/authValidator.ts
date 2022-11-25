@@ -5,10 +5,7 @@ export const sendSmsValidator = [
     .trim()
     .notEmpty()
     .withMessage('Mobile phone number must be supplied.'),
-  body('recaptchaToken')
-    .trim()
-    .notEmpty()
-    .withMessage('Oops. Retry your captcha.'),
+  body('recaptchaToken').trim().notEmpty().withMessage('Retry your captcha.'),
 ]
 
 export const verifySmsAndAuthValidator = [
@@ -21,7 +18,5 @@ export const verifySmsAndAuthValidator = [
       max: 6,
     })
     .withMessage('Invalid code.'),
-  body('sessionInfo')
-    .notEmpty()
-    .withMessage('Please, try to log in once again'),
+  body('sessionInfo').notEmpty().withMessage('Session info is not supplied.'),
 ]

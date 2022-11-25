@@ -27,12 +27,12 @@ const bootstrap = async () => {
   })
 
   process.on('unhandledRejection', (err: Error) => {
-  console.log('UNHANDLED REJECTION! Shutting down...');
-  console.log(err.name, err.message);
-  server.close(() => {
-    process.exit(1);
-  });
-});
+    console.log('UNHANDLED REJECTION! Shutting down...')
+    console.log(err.name, err.message)
+    server.close(() => {
+      process.exit(1)
+    })
+  })
 }
 
 bootstrap()
