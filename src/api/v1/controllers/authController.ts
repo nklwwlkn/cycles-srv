@@ -1,10 +1,10 @@
 import { Request, Response } from 'express'
 import jwt from 'jsonwebtoken'
 
-import * as User from '@services/usersService'
 import { ENV } from '@config/globals'
-
+import * as User from '@services/usersService'
 import * as Sms from '@services/auth/firebase/smsService'
+
 
 export async function sendSms(req: Request, res: Response) {
   const { phoneNumber, recaptchaToken } = req.body
